@@ -54,7 +54,10 @@ function App() {
     const changeValuesInputMin = (value: string) => {
         setValueDispMin(+value);
         setNum(+value);
-        if (+value <= 0) setValueDispMin(0);
+        if (+value <= 0) {
+            setValueDispMin(0)
+            setNum(0)
+        };
          };
 
     let disabledButtonInc = num === valueDispMax ? true : false;
