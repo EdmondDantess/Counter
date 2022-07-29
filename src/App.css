@@ -1,38 +1,81 @@
+body {
+  background-color: rgb(122, 125, 126);
+}
+
 .App {
+  padding: 20px 20px 0px 20px;
+  background-color: rgb(35, 50, 82);
+  box-shadow: 1px 1px 5px black;
+  margin: 10% auto;
+  width: 200px;
+  height: 200px;
   text-align: center;
+  font-weight: bold;
+  font-size: 50px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.breakNumDisp {
+  color: red;
+  text-shadow: 1px 1px 5px black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.bakcgroundNum {
+  height: 67px;
+  width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex-wrap: nowrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: flex-end;
+  align-content: center;
+  background-color: rgb(167, 167, 167);
+  box-shadow: 1px 1px 5px grey;
+
 }
 
-.App-link {
-  color: #61dafb;
+.bakcgroundNum label {
+  font-size: 15px;
+  margin-right: 4px;
+  text-shadow: 1px 1px 5px grey;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bakcgroundNum input {
+  width: 100px;
+  background-color: rgba(128, 128, 128, 0.37);
+  box-shadow: 1px 1px 5px grey;
+  font-weight: bold;
+}
+
+button {
+  font-weight: bold;
+  width: 100px;
+  height: 50px;
+  box-shadow: 1px 1px 5px black;
+}
+
+button:active {
+  background-color: rgb(35, 50, 82);
+}
+
+button:disabled {
+  color: gray;
+  background-color: rgb(35, 50, 82);
+}
+
+.ButtonsBlock {
+  position: relative;
+}
+
+.ButtonSettings {
+  display: flex;
+}
+
+.ButtonSettings button {
+  width: 200px;
+}
+
+.ErrorInputValue input {
+  color: red;
+  background-color: rgb(255, 159, 175);
+  box-shadow: 1px 1px 5px red;
 }
