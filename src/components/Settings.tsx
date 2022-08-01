@@ -1,46 +1,52 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent, FC} from "react";
 
 type SettingsPropsType = {
-  settingsActivated: boolean;
-  valueDispMax: number;
-  valueDispMin: number;
-  changeValuesInputMax: (value: string) => void;
-  changeValuesInputMin: (value: string) => void;
+    settingsActivated: boolean;
+    valueDispMax: number;
+    valueDispMin: number;
+    changeValuesInputMax: (value: string) => void;
+    changeValuesInputMin: (value: string) => void;
 };
 
-export const Settings = (props: SettingsPropsType) => {
-  const onChangeInputHandlerMax = (e: ChangeEvent<HTMLInputElement>) => {
-    props.changeValuesInputMax(e.currentTarget.value);
-  };
-  const onChangeInputHandlerMin = (e: ChangeEvent<HTMLInputElement>) => {
-    props.changeValuesInputMin(e.currentTarget.value);
-  };
+export const Settings: FC<SettingsPropsType> = ({
+                                                    settingsActivated,
+                                                    valueDispMin,
+                                                    valueDispMax,
+                                                    changeValuesInputMin,
+                                                    changeValuesInputMax
+                                                }) => {
+    const onChangeInputHandlerMax = (e: ChangeEvent<HTMLInputElement>): void => {
+        changeValuesInputMax(e.currentTarget.value);
+    };
+    const onChangeInputHandlerMin = (e: ChangeEvent<HTMLInputElement>) => {
+        changeValuesInputMin(e.currentTarget.value);
+    };
 
-  let classCounterNumInputError =
-    props.valueDispMax <= props.valueDispMin ? "ErrorInputValue" : "";
+    let classCounterNumInputError =
+        valueDispMax <= valueDispMin ? "ErrorInputValue" : "";
 
-  return (
-    <>
-      {!props.settingsActivated && (
+    return (
         <>
-          <label className={classCounterNumInputError}>
-            max value:
-            <input
-              type="number"
-              onChange={onChangeInputHandlerMax}
-              value={props.valueDispMax}
-            />
-          </label>
-          <label className={classCounterNumInputError}>
-            start value:
-            <input
-              type="number"
-              onChange={onChangeInputHandlerMin}
-              value={props.valueDispMin}
-            />
-          </label>
+            {!settingsActivated && (
+                <>
+                    <label className={classCounterNumInputError}>
+                        max value:
+                        <input
+                            type="number"
+                            onChange={onChangeInputHandlerMax}
+                            value={valueDispMax}
+                        />
+                    </label>
+                    <label className={classCounterNumInputError}>
+                        start value:
+                        <input
+                            type="number"
+                            onChange={onChangeInputHandlerMin}
+                            value={valueDispMin}
+                        />
+                    </label>
+                </>
+            )}
         </>
-      )}
-    </>
-  );
+    );
 };

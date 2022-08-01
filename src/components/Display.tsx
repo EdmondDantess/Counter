@@ -1,30 +1,38 @@
-import React from "react";
-import { Settings } from "./Settings";
+import React, {FC} from "react";
+import {Settings} from "./Settings";
 
 type DisplayPropsType = {
-  num: number;
-  settingsActivated: boolean;
-  valueDispMax: number;
-  valueDispMin: number;
-  changeValuesInputMax: (value: string) => void;
-  changeValuesInputMin: (value: string) => void;
+    num: number;
+    settingsActivated: boolean;
+    valueDispMax: number;
+    valueDispMin: number;
+    changeValuesInputMax: (value: string) => void;
+    changeValuesInputMin: (value: string) => void;
 };
 
-export const Display = (props: DisplayPropsType) => {
-  let classCounterNum = props.num === props.valueDispMax ? "breakNumDisp" : "";
+export const Display: FC<DisplayPropsType> = ({
+                                                  num,
+                                                  valueDispMax,
+                                                  valueDispMin,
+                                                  changeValuesInputMax,
+                                                  changeValuesInputMin,
+                                                  settingsActivated
+                                              }) => {
 
-  return (
-    <div className="bakcgroundNum">
-      {props.settingsActivated && (
-        <span className={classCounterNum}>{props.num}</span>
-      )}
-      <Settings
-        settingsActivated={props.settingsActivated}
-        valueDispMax={props.valueDispMax}
-        valueDispMin={props.valueDispMin}
-        changeValuesInputMax={props.changeValuesInputMax}
-        changeValuesInputMin={props.changeValuesInputMin}
-      />
-    </div>
-  );
+    let classCounterNum = num === valueDispMax ? "breakNumDisp" : "";
+
+    return (
+        <div className="bakcgroundNum">
+            {settingsActivated && (
+                <span className={classCounterNum}>{num}</span>
+            )}
+            <Settings
+                settingsActivated={settingsActivated}
+                valueDispMax={valueDispMax}
+                valueDispMin={valueDispMin}
+                changeValuesInputMax={changeValuesInputMax}
+                changeValuesInputMin={changeValuesInputMin}
+            />
+        </div>
+    );
 };

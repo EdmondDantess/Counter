@@ -30,11 +30,13 @@ function App() {
         }
     }, []);
 
+    // Излишний юзэффект
+
     useEffect(() => {
         localStorage.setItem("CountNum", JSON.stringify(num));
         localStorage.setItem("maxValue", JSON.stringify(valueDispMax));
         localStorage.setItem("minValue", JSON.stringify(valueDispMin));
-    }, [num, valueDispMin, valueDispMax]);
+    }, [num]);
 
     const incrementPlusOne = () => {
         if (num < valueDispMax) {
@@ -57,8 +59,8 @@ function App() {
         if (+value <= 0) {
             setValueDispMin(0)
             setNum(0)
-        };
-         };
+        }
+            };
 
     let disabledButtonInc = num === valueDispMax ? true : false;
     let disabledButtonReset = num === valueDispMin ? true : false;
@@ -76,23 +78,22 @@ function App() {
             />
             <div className="ButtonsBlock">
                 <Button
-                    callBackF={incrementPlusOne}
+                    callBack={incrementPlusOne}
                     valueDisabled={disabledButtonInc || !settingsActivated}
-                    children="Inc"
+                    name="Inc"
                 />
                 <Button
-                    callBackF={resetNum}
+                    callBack={resetNum}
                     valueDisabled={disabledButtonReset || !settingsActivated}
-                    children={"Reset"}
+                    name="Reset"
                 />
                 <div className="ButtonSettings">
                     <Button
-                        callBackF={pressSettings}
+                        callBack={pressSettings}
                         valueDisabled={disabledButtonSettings}
-                    >
-                        {settingsActivated && "Settings"}
-                        {!settingsActivated && "Set Values"}
-                    </Button>
+                        name={settingsActivated ? "Settings" : "Set Values"}
+                    />
+
                 </div>
             </div>
         </div>
