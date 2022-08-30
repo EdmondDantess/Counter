@@ -1,99 +1,80 @@
-import React, {useEffect, useState} from "react";
-import "./App.css";
-import {Display} from "./components/Display";
-import {Button} from "./components/Button";
+import React, {useEffect} from 'react';
+import './App.css';
+import {Display} from './components/Display';
+import {Button} from './components/Button';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from './redux/store';
+import {setNum, setSettingsActivated, setValueDispMax, setValueDispMin} from './redux/valuesReducer';
 
 function App() {
 
-    let [valueDispMin, setValueDispMin] = useState<number>(0);
-    let [valueDispMax, setValueDispMax] = useState<number>(5);
-    let [num, setNum] = useState<number>(valueDispMin);
-    let [settingsActivated, setSettingsActivated] = useState<boolean>(true);
+    let valueOnDisplayMin = useSelector<AppRootStateType, number>(state => state.valuesOnDisplay.valueOnDisplayMin)
+    let valueOnDisplayMax = useSelector<AppRootStateType, number>(state => state.valuesOnDisplay.valueOnDisplayMax)
+    let settingsActivated = useSelector<AppRootStateType, boolean>(state => state.valuesOnDisplay.settingsActivated)
+    let num = useSelector<AppRootStateType, number>(state => state.valuesOnDisplay.num)
 
-    useEffect(() => {
+    const dispatch = useDispatch()
 
-        let newValueNum = localStorage.getItem("CountNum");
-        let newValueDispMax = localStorage.getItem("maxValue");
-        let newValueDispMin = localStorage.getItem("minValue");
 
-        if (newValueDispMin) {
-            valueDispMin = JSON.parse(newValueDispMin);
-            setValueDispMin(valueDispMin);
-        }
-        if (newValueDispMax) {
-            valueDispMax = JSON.parse(newValueDispMax);
-            setValueDispMax(valueDispMax);
-        }
-        if (newValueNum) {
-            num = JSON.parse(newValueNum);
-            setNum(num);
-        }
-    }, []);
-
-    // Излишний юзэффект
-
-    useEffect(() => {
-        localStorage.setItem("CountNum", JSON.stringify(num));
-        localStorage.setItem("maxValue", JSON.stringify(valueDispMax));
-        localStorage.setItem("minValue", JSON.stringify(valueDispMin));
-    }, [num]);
+    useEffect(()=>{
+        dispatch(setNum(valueOnDisplayMin))
+    }, [])
 
     const incrementPlusOne = () => {
-        if (num < valueDispMax) {
-            setNum(num + 1);
+        if (num < valueOnDisplayMax) {
+            dispatch(setNum(num + 1));
         }
     };
     const resetNum = () => {
-        setNum(valueDispMin);
+        dispatch(setNum(valueOnDisplayMin));
     };
     const pressSettings = () => {
-        setSettingsActivated(!settingsActivated);
+        dispatch(setSettingsActivated(!settingsActivated));
     };
-    const changeValuesInputMax = (value: string) => {
-        setValueDispMax(+value);
-        if (+value < 0) setValueDispMax(0);
+    const changeValuesInputMax = (valueMax: string) => {
+        dispatch(setValueDispMax(+valueMax));
+        if (+valueMax < 0) dispatch(setValueDispMax(0));
     };
-    const changeValuesInputMin = (value: string) => {
-        setValueDispMin(+value);
-        setNum(+value);
-        if (+value <= 0) {
-            setValueDispMin(0)
-            setNum(0)
+    const changeValuesInputMin = (valueMin: string) => {
+        dispatch(setValueDispMin(+valueMin));
+        dispatch(setNum(+valueMin));
+        if (+valueMin <= 0) {
+            dispatch(setValueDispMin(0))
+            dispatch(setNum(0))
         }
-            };
+    };
 
-    let disabledButtonInc = num === valueDispMax ? true : false;
-    let disabledButtonReset = num === valueDispMin ? true : false;
-    let disabledButtonSettings = valueDispMax < valueDispMin ? true : false;
+    let disabledButtonInc = num === valueOnDisplayMax ? true : false;
+    let disabledButtonReset = num === valueOnDisplayMin ? true : false;
+    let disabledButtonSettings = valueOnDisplayMax < valueOnDisplayMin ? true : false;
 
     return (
         <div className="App">
             <Display
                 num={num}
                 settingsActivated={settingsActivated}
-                valueDispMax={valueDispMax}
-                valueDispMin={valueDispMin}
+                valueOnDisplayMax={valueOnDisplayMax}
+                valueOnDisplayMin={valueOnDisplayMin}
                 changeValuesInputMax={changeValuesInputMax}
                 changeValuesInputMin={changeValuesInputMin}
             />
             <div className="ButtonsBlock">
                 <Button
                     callBack={incrementPlusOne}
-                    valueDisabled={disabledButtonInc || !settingsActivated}
+                    valueDisabled={disabledButtonInc || settingsActivated}
                     name="Inc"
                 />
                 <Button
                     callBack={resetNum}
-                    valueDisabled={disabledButtonReset || !settingsActivated}
+                    valueDisabled={disabledButtonReset || settingsActivated}
                     name="Reset"
                 />
                 <div className="ButtonSettings">
                     <Button
                         callBack={pressSettings}
                         valueDisabled={disabledButtonSettings}
-                        name={settingsActivated ? "Settings" : "Set Values"}
+                        name={settingsActivated ? 'Settings' : 'Set Values'}
                     />
-
                 </div>
             </div>
         </div>

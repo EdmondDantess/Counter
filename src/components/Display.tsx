@@ -4,32 +4,32 @@ import {Settings} from "./Settings";
 type DisplayPropsType = {
     num: number;
     settingsActivated: boolean;
-    valueDispMax: number;
-    valueDispMin: number;
+    valueOnDisplayMax: number;
+    valueOnDisplayMin: number;
     changeValuesInputMax: (value: string) => void;
     changeValuesInputMin: (value: string) => void;
 };
 
 export const Display: FC<DisplayPropsType> = ({
                                                   num,
-                                                  valueDispMax,
-                                                  valueDispMin,
+                                                  valueOnDisplayMax,
+                                                  valueOnDisplayMin,
                                                   changeValuesInputMax,
                                                   changeValuesInputMin,
                                                   settingsActivated
                                               }) => {
 
-    let classCounterNum = num === valueDispMax ? "breakNumDisp" : "";
+    let classCounterNum = num === valueOnDisplayMax ? "breakNumDisp" : "";
 
     return (
         <div className="bakcgroundNum">
-            {settingsActivated && (
+            {!settingsActivated && (
                 <span className={classCounterNum}>{num}</span>
             )}
             <Settings
                 settingsActivated={settingsActivated}
-                valueDispMax={valueDispMax}
-                valueDispMin={valueDispMin}
+                valueOnDisplayMax={valueOnDisplayMax}
+                valueOnDisplayMin={valueOnDisplayMin}
                 changeValuesInputMax={changeValuesInputMax}
                 changeValuesInputMin={changeValuesInputMin}
             />
