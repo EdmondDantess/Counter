@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import {Display} from './components/Display';
 import {Button} from './components/Button';
@@ -14,11 +14,6 @@ function App() {
     let num = useSelector<AppRootStateType, number>(state => state.valuesOnDisplay.num)
 
     const dispatch = useDispatch()
-
-
-    useEffect(()=>{
-        dispatch(setNum(valueOnDisplayMin))
-    }, [])
 
     const incrementPlusOne = () => {
         if (num < valueOnDisplayMax) {
@@ -44,9 +39,9 @@ function App() {
         }
     };
 
-    let disabledButtonInc = num === valueOnDisplayMax ? true : false;
-    let disabledButtonReset = num === valueOnDisplayMin ? true : false;
-    let disabledButtonSettings = valueOnDisplayMax < valueOnDisplayMin ? true : false;
+    let disabledButtonInc = num === valueOnDisplayMax;
+    let disabledButtonReset = num === valueOnDisplayMin;
+    let disabledButtonSettings = valueOnDisplayMax <= valueOnDisplayMin;
 
     return (
         <div className="App">
@@ -73,7 +68,7 @@ function App() {
                     <Button
                         callBack={pressSettings}
                         valueDisabled={disabledButtonSettings}
-                        name={settingsActivated ? 'Settings' : 'Set Values'}
+                        name={!settingsActivated ? 'Settings' : 'Set Values'}
                     />
                 </div>
             </div>
