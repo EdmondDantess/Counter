@@ -1,6 +1,6 @@
 # Hello
 
-<b>It's just SPA counter Implemented on Redux. localstorage is used by the Den Abramov method</b>
+<b>It's just <a href="https://edmonddantess.github.io/Counter"> SPA counter</a> Implemented on Redux. localstorage is used by the Den Abramov method</b>
 
 
 After git clone 'link' install all dependencies from package.json:
